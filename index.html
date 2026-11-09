@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Hayat! 🎉 ✨</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@0,600;1,400;1,700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        handwriting: ['Dancing Script', 'cursive'],
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        arabic: ['Amiri', 'serif'],
+                        arabicKufi: ['Reem Kufi', 'sans-serif'],
+                    },
+                    colors: {
+                        hotPink: '#E60067',
+                        hotPinkHover: '#C40057',
+                        daisyYellow: '#FFCC00',
+                        accentTeal: '#00BCD4',
+                        lightBg: '#FFFFFF',
+                        offWhite: '#F8F9FA',
+                        charcoal: '#111111',
+                        borderGray: '#E5E7EB',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-18px) rotate(3deg)' },
+                        },
+                        twinkle: {
+                            '0%, 100%': { opacity: 0.3, transform: 'scale(0.8)' },
+                            '50%': { opacity: 1, transform: 'scale(1.2)' },
+                        },
+                        flicker: {
+                            '0%, 100%': { opacity: 1, transform: 'scale(1) rotate(-1deg)' },
+                            '50%': { opacity: 0.85, transform: 'scale(0.92) rotate(1.5deg)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 15px rgba(230, 0, 103, 0.3)' },
+                            '50%': { boxShadow: '0 0 30px rgba(230, 0, 103, 0.6)' },
+                        },
+                        popIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.8) translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+                        }
+                    },
+                    animation: {
+                        float: 'float 6s ease-in-out infinite',
+                        twinkle: 'twinkle 3s ease-in-out infinite',
+                        flicker: 'flicker 0.35s ease-in-out infinite',
+                        pulseGlow: 'pulseGlow 2s infinite',
+                        popIn: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Clean Bright Theme Styling & Watermark Pattern */
+        body {
+            background-color: #FFFFFF;
+            background-image: 
+                radial-gradient(#E5E7EB 1px, transparent 1px),
+                linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px);
+            background-size: 24px 24px, 40px 40px;
+            overflow-x: hidden;
+            color: #111111;
+        }
+
+        /* Perspective for 3D card flip */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFFFF;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFD1DC;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E60067;
+        }
+
+        /* Candle flame effect */
+        .flame {
+            background: radial-gradient(ellipse at bottom, #ffffff 0%, #FFCC00 50%, #E60067 100%);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 14px #FFCC00, 0 0 25px #E60067;
+        }
+
+        .smoke {
+            animation: rise 2s ease-out forwards;
+        }
+
+        @keyframes rise {
+            0% { opacity: 0.8; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-35px) scale(2.8); }
+        }
+
+        /* Interactive Polaroid hover card effects */
+        .polaroid-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .polaroid-card:hover {
+            transform: translateY(-8px) rotate(0deg) scale(1.03) !important;
+            z-index: 30;
+            box-shadow: 0 20px 30px -10px rgba(230, 0, 103, 0.2);
+        }
+
+        .balloon-pop {
+            animation: explode 0.3s forwards ease-out;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.8; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        /* Decorative Side Watermark "H" Columns */
+        .watermark-column {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.04);
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="font-sans text-charcoal min-h-screen relative flex flex-col justify-between selection:bg-hotPink selection:text-white">
+
+    <!-- Watermark Background Accents -->
+    <div class="fixed top-0 left-2 bottom-0 pointer-events-none z-0 flex flex-col justify-around text-4xl sm:text-6xl watermark-column leading-none">
+        <div>HH</div><div>HH</div><div>HH</div><div>HH</div><div>HH</div><div>HH</div><div>HH</div>
+    </div>
+
+    <!-- Background Particle Canvas -->
+    <canvas id="bgCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Header Control Bar -->
+    <header class="relative z-30 w-full max-w-5xl mx-auto px-4 py-6 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <span class="text-xl sm:text-2xl text-charcoal font-black tracking-tighter">✖✖✖✖✖✖</span>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <button id="confettiBtn" onclick="fireConfetti()" class="bg-hotPink hover:bg-hotPinkHover text-white px-5 py-2.5 rounded-full shadow-lg transition-all duration-300 flex items-center space-x-2 font-bold text-xs uppercase tracking-wider hover:scale-105 active:scale-95 cursor-pointer">
+                <i class="fa-solid fa-wand-magic-sparkles text-daisyYellow"></i>
+                <span class="hidden sm:inline">Celebrate!</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Floating Balloons Container -->
+    <div class="fixed inset-0 pointer-events-none z-10 overflow-hidden" id="balloonContainer"></div>
+
+    <!-- Main Content Grid -->
+    <main class="relative z-20 w-full max-w-4xl mx-auto px-4 py-6 flex-grow flex flex-col items-center justify-center space-y-16">
+
+        <!-- Hero Greeting Section -->
+        <section class="w-full flex flex-col items-center text-center space-y-6 relative">
+            
+            <!-- Arabic Header Decor -->
+            <div class="flex items-center space-x-3 text-hotPink text-2xl">
+                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M12,2 L14.5,7 L19.5,4.5 L17,9.5 L22,12 L17,14.5 L19.5,19.5 L14.5,17 L12,22 L9.5,17 L4.5,19.5 L7,14.5 L2,12 L7,9.5 L4.5,4.5 L9.5,7 Z"/>
+                </svg>
+                <span class="font-arabicKufi text-xl font-bold tracking-widest text-charcoal">كل عام وأنتِ بخير</span>
+                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M12,2 L14.5,7 L19.5,4.5 L17,9.5 L22,12 L17,14.5 L19.5,19.5 L14.5,17 L12,22 L9.5,17 L4.5,19.5 L7,14.5 L2,12 L7,9.5 L4.5,4.5 L9.5,7 Z"/>
+                </svg>
+            </div>
+
+            <!-- Title Accent with Daisy Accent -->
+            <div class="relative inline-block">
+                <h1 class="text-6xl md:text-8xl font-serif font-bold text-hotPink leading-none tracking-tight">
+                    Happy<br/>
+                    <span class="font-serif font-extrabold text-hotPink">Birthday</span>
+                </h1>
+
+                <div class="absolute -top-6 -right-8 sm:-top-8 sm:-right-12 w-12 h-12 sm:w-16 sm:h-16 animate-float">
+                    <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+                        <circle cx="50" cy="50" r="16" fill="#FFCC00" />
+                        <path d="M50 10 C45 30 55 30 50 10 M50 90 C45 70 55 70 50 90 M10 50 C30 45 30 55 10 50 M90 50 C70 45 70 55 90 50 M22 22 C37 34 43 28 22 22 M78 78 C63 66 57 72 78 78 M22 78 C37 66 43 72 22 78 M78 22 C63 34 57 28 78 22" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" fill="none" />
+                        <circle cx="50" cy="50" r="14" fill="#FFCC00" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Arabic Calligraphy Name Subheading -->
+            <div class="pt-2 space-y-2">
+                <div class="font-arabic text-3xl md:text-4xl text-charcoal font-bold dir-rtl">
+                    عيد ميلاد سعيد يا حياة ✨
+                </div>
+                <h2 class="font-handwriting text-5xl md:text-7xl text-hotPink font-bold transform -rotate-2">
+                    Hayat Tesfaye
+                </h2>
+                <p class="text-xs sm:text-sm text-gray-500 font-semibold tracking-widest uppercase mt-3 max-w-md mx-auto">
+                    WISHING YOU A DAY AS AMAZING AND BEAUTIFUL AS YOU ARE • CELEBRATE WITH STYLE AND ENDLESS JOY
+                </p>
+            </div>
+
+            <!-- Date Callout Badge -->
+            <div class="mt-4 inline-flex items-center space-x-3 border-y-2 border-charcoal py-2 px-6 bg-white shadow-sm">
+                <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-charcoal">MONDAY</span>
+                <span class="bg-hotPink text-white font-black text-xl px-3 py-1 rounded-md">09</span>
+                <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-charcoal">NOVEMBER</span>
+            </div>
+        </section>
+
+        <!-- Interactive Cake Section -->
+        <section class="w-full flex flex-col items-center justify-center relative">
+            <div class="text-center mb-4">
+                <h3 class="text-xl font-serif text-charcoal font-bold tracking-wide">Make a Wish! 🕯️</h3>
+                <p id="cakeInstruction" class="text-xs text-hotPink font-semibold uppercase tracking-wider mt-1">
+                    Click each candle to blow it out or tap "Blow Out Candles"
+                </p>
+            </div>
+
+            <!-- Cake Container -->
+            <div class="relative w-64 h-64 md:w-80 md:h-80 flex flex-col items-center justify-end">
+                
+                <!-- Candles Group -->
+                <div class="flex justify-center space-x-6 z-10 -mb-2" id="candlesGroup">
+                    <div class="candle cursor-pointer group flex flex-col items-center transition-transform hover:scale-110" onclick="extinguishCandle(this)">
+                        <div class="flame-container relative w-4 h-6 flex justify-center items-end">
+                            <div class="flame w-3.5 h-5 animate-flicker"></div>
+                        </div>
+                        <div class="w-2.5 h-12 bg-gradient-to-t from-hotPink via-pink-200 to-white rounded-t-sm shadow-sm"></div>
+                    </div>
+                    <div class="candle cursor-pointer group flex flex-col items-center transition-transform hover:scale-110" onclick="extinguishCandle(this)">
+                        <div class="flame-container relative w-4 h-6 flex justify-center items-end">
+                            <div class="flame w-3.5 h-5 animate-flicker" style="animation-delay: 0.15s"></div>
+                        </div>
+                        <div class="w-2.5 h-14 bg-gradient-to-t from-daisyYellow via-yellow-100 to-white rounded-t-sm shadow-sm"></div>
+                    </div>
+                    <div class="candle cursor-pointer group flex flex-col items-center transition-transform hover:scale-110" onclick="extinguishCandle(this)">
+                        <div class="flame-container relative w-4 h-6 flex justify-center items-end">
+                            <div class="flame w-4 h-6 animate-flicker" style="animation-delay: 0.3s"></div>
+                        </div>
+                        <div class="w-3 h-16 bg-gradient-to-t from-hotPink via-daisyYellow to-white rounded-t-sm shadow-sm"></div>
+                    </div>
+                    <div class="candle cursor-pointer group flex flex-col items-center transition-transform hover:scale-110" onclick="extinguishCandle(this)">
+                        <div class="flame-container relative w-4 h-6 flex justify-center items-end">
+                            <div class="flame w-3.5 h-5 animate-flicker" style="animation-delay: 0.05s"></div>
+                        </div>
+                        <div class="w-2.5 h-14 bg-gradient-to-t from-accentTeal via-cyan-100 to-white rounded-t-sm shadow-sm"></div>
+                    </div>
+                    <div class="candle cursor-pointer group flex flex-col items-center transition-transform hover:scale-110" onclick="extinguishCandle(this)">
+                        <div class="flame-container relative w-4 h-6 flex justify-center items-end">
+                            <div class="flame w-3.5 h-5 animate-flicker" style="animation-delay: 0.2s"></div>
+                        </div>
+                        <div class="w-2.5 h-12 bg-gradient-to-t from-hotPink via-pink-200 to-white rounded-t-sm shadow-sm"></div>
+                    </div>
+                </div>
+
+                <!-- Cake Layers -->
+                <div class="w-48 md:w-56 h-16 bg-gradient-to-r from-pink-100 via-white to-pink-100 rounded-t-2xl border-b-4 border-hotPink/40 shadow-inner flex items-center justify-around px-4 relative z-0 border-t-2 border-x-2 border-pink-200">
+                    <span class="text-hotPink">🌼</span>
+                    <span class="text-daisyYellow">✨</span>
+                    <span class="text-hotPink">🌼</span>
+                </div>
+                <div class="w-56 md:w-64 h-16 bg-gradient-to-r from-hotPink via-pink-500 to-hotPink border-b-4 border-hotPink/60 shadow-md flex items-center justify-around px-6 text-white">
+                    <span>✨</span>
+                    <span class="font-handwriting text-3xl font-bold text-white">Hayat</span>
+                    <span>✨</span>
+                </div>
+                <div class="w-64 md:w-72 h-20 bg-gradient-to-r from-white via-pink-50 to-white rounded-t-sm shadow-xl border-b-8 border-hotPink flex items-center justify-center border-x-2 border-pink-200">
+                    <div class="w-full h-full border-t-2 border-dashed border-hotPink/30 flex justify-around items-center px-4">
+                        <span class="text-xs text-hotPink font-extrabold uppercase tracking-widest">Happy Birthday Hayat</span>
+                    </div>
+                </div>
+                <div class="w-72 md:w-80 h-4 bg-gray-200 rounded-full shadow-md"></div>
+                <div class="w-32 md:w-40 h-3 bg-gray-300 rounded-b-lg shadow-sm"></div>
+            </div>
+
+            <!-- Cake Action Buttons -->
+            <div class="mt-8 flex space-x-3 relative z-20">
+                <button onclick="blowAllCandles()" class="bg-hotPink text-white hover:bg-hotPinkHover px-6 py-2.5 rounded-full shadow-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer active:scale-95">
+                    <i class="fa-solid fa-wind text-daisyYellow"></i>
+                    <span>Blow Out Candles</span>
+                </button>
+                <button onclick="rekindleCandles()" class="bg-white text-gray-600 border border-gray-300 hover:bg-gray-50 px-4 py-2.5 rounded-full shadow-sm text-xs font-bold transition-all flex items-center space-x-1 cursor-pointer active:scale-95" title="Light Candles Again">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Memory Showcase Section with Pre-Populated Images -->
+        <section class="w-full max-w-4xl mx-auto space-y-6">
+            <div class="text-center space-y-1">
+        <!-- Memory Showcase Section with Embedded Photos -->
+        <section class="w-full max-w-4xl mx-auto space-y-6">
+            <div class="text-center space-y-1">
+                <div class="flex justify-center items-center space-x-2 text-hotPink text-sm font-extrabold uppercase tracking-widest">
+                    <span>❖</span>
+                    <span>MEMORIES & BLESSINGS</span>
+                    <span>❖</span>
+                </div>
+                <h3 class="text-2xl font-serif text-charcoal font-bold">Moments of Joy</h3>
+                <p class="text-xs text-gray-500 font-medium">Beautiful moments celebrated forever ✨</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
+                
+                <!-- Polaroid 1: Pure Sunshine (Full Color Soft Warm Tint) -->
+                <div class="polaroid-card bg-white p-4 rounded-xl shadow-lg border-2 border-pink-100 transform -rotate-3 cursor-pointer relative group">
+                    <div class="w-full h-52 bg-gradient-to-br from-pink-50 to-yellow-50 rounded-lg flex items-center justify-center border border-pink-200 relative overflow-hidden">
+                        <img id="cardImg1" 
+                             src="hayat.jpg" 
+                             alt="Pure Sunshine" 
+                             class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                             style="filter: brightness(102%) contrast(105%) saturate(110%);">
+                    </div>
+                    <div class="pt-3 text-center">
+                        <p class="font-handwriting text-2xl text-hotPink">Pure Sunshine</p>
+                        <p class="text-[11px] font-arabic text-gray-500 mt-0.5">سعادة دائمة</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid 2: Queen of the Day (Poster Style B&W Oval Portrait) -->
+                <div class="polaroid-card bg-white p-4 rounded-xl shadow-xl border-4 border-hotPink transform rotate-2 cursor-pointer sm:translate-y-2 relative group">
+                    <div class="w-full h-56 bg-charcoal rounded-full flex items-center justify-center border-4 border-hotPink relative overflow-hidden mx-auto shadow-md">
+                        <img id="cardImg2" 
+                             src="hayat1.jpg" 
+                             alt="Queen of the Day" 
+                             class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                             style="filter: grayscale(1%) contrast(120%) brightness(95%);">
+                    </div>
+                    <div class="pt-3 text-center">
+                        <p class="font-handwriting text-2xl text-hotPink">Queen of the Day</p>
+                        <p class="text-[11px] font-arabic text-gray-500 mt-0.5">أجمل الأيام</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid 3: Endless Joy (Vintage Sepia Warm Tone) -->
+                <div class="polaroid-card bg-white p-4 rounded-xl shadow-lg border-2 border-pink-100 transform -rotate-2 cursor-pointer relative group">
+                    <div class="w-full h-52 bg-gradient-to-br from-yellow-50 to-pink-50 rounded-lg flex items-center justify-center border border-pink-200 relative overflow-hidden">
+                        <img id="cardImg3" 
+                             src="hayat2.jpg" 
+                             alt="Endless Joy" 
+                             class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                             style="filter: sepia(40%) contrast(110%) saturate(120%);">
+                    </div>
+                    <div class="pt-3 text-center">
+                        <p class="font-handwriting text-2xl text-hotPink">Endless Joy</p>
+                        <p class="text-[11px] font-arabic text-gray-500 mt-0.5">ذكريات جميلة</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Interactive Flip Birthday Card -->
+        <section class="w-full max-w-xl mx-auto flex flex-col items-center">
+            <h3 class="text-2xl font-serif text-charcoal font-bold mb-1">A Special Message For You</h3>
+            <p class="text-xs text-hotPink uppercase tracking-widest font-extrabold mb-6">Tap the envelope to open</p>
+
+            <div class="w-full h-80 sm:h-96 perspective-1000 cursor-pointer" onclick="toggleCard(this)">
+                <div id="cardInner" class="relative w-full h-full duration-700 transform-style-3d shadow-xl rounded-2xl border-2 border-hotPink/30">
+                    
+                    <!-- Card Front -->
+                    <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-white via-pink-50 to-white rounded-2xl p-8 flex flex-col justify-between items-center text-center backface-hidden border-2 border-white shadow-inner">
+                        <div class="w-full flex justify-between items-center">
+                            <span class="text-hotPink font-serif italic tracking-wider font-semibold">For Hayat</span>
+                            <i class="fa-solid fa-heart text-hotPink text-xl animate-pulse"></i>
+                        </div>
+                        <div class="my-auto space-y-3">
+                            <div class="w-20 h-20 mx-auto rounded-full bg-pink-100 border-2 border-hotPink flex items-center justify-center text-3xl shadow-md">
+                                💌
+                            </div>
+                            <h4 class="text-2xl font-sans font-extrabold text-charcoal uppercase tracking-wider">Click to Read Card</h4>
+                            <p class="text-xs text-gray-500">A message filled with wishes just for you</p>
+                        </div>
+                        <div class="text-xs text-hotPink font-extrabold uppercase tracking-widest">With lots of love ❤️</div>
+                    </div>
+
+                    <!-- Card Back / Inside Content -->
+                    <div class="absolute inset-0 w-full h-full bg-white rounded-2xl p-6 sm:p-8 flex flex-col justify-between rotate-y-180 backface-hidden border-4 border-hotPink shadow-2xl text-left overflow-y-auto">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center border-b border-pink-100 pb-2">
+                                <h4 class="font-handwriting text-3xl text-hotPink">Dearest Hayat,</h4>
+                                <span class="text-xs text-gray-400 font-sans uppercase tracking-wider">Today is yours!</span>
+                            </div>
+                            <p class="text-gray-700 text-sm leading-relaxed font-sans">
+                                Having you as a friend is a true blessing. Your kindness, laughter, and beautiful spirit bring so much sunshine into every room you enter.
+                            </p>
+                            <p class="text-gray-700 text-sm leading-relaxed font-sans">
+                                On your birthday, I wish you endless happiness, good health, big dreams achieved, and unforgettable memories in the year ahead!
+                            </p>
+                        </div>
+                        <div class="mt-4 border-t border-pink-100 pt-3 flex justify-between items-end">
+                            <div>
+                                <p class="text-xs text-gray-400">Forever & Always,</p>
+                                <p class="font-handwriting text-2xl text-hotPink">Your Friend</p>
+                            </div>
+                            <span class="text-xl">💐✨</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Surprise Gift Boxes -->
+        <section class="w-full max-w-4xl mx-auto space-y-6">
+            <div class="text-center">
+                <h3 class="text-2xl font-serif text-charcoal font-bold">Unwrap Birthday Surprises</h3>
+                <p class="text-xs text-hotPink uppercase tracking-widest font-extrabold mt-1">Tap each gift box to reveal a special note</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                
+                <!-- Gift Box 1 -->
+                <div class="gift-box group bg-white p-6 rounded-2xl shadow-md border-2 border-pink-100 hover:border-hotPink transition-all cursor-pointer relative overflow-hidden text-center" onclick="revealWish(this, 'May your coming year be filled with adventures, unforgettable journeys, and dreams come true! ✈️✨')">
+                    <div class="gift-content transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">🎁</div>
+                        <h4 class="font-bold text-hotPink text-xs uppercase tracking-wider">Gift #1</h4>
+                        <p class="text-xs text-gray-400 mt-1">Tap to open</p>
+                    </div>
+                    <div class="wish-revealed hidden absolute inset-0 bg-gradient-to-br from-hotPink to-pink-600 text-white p-6 flex items-center justify-center text-sm font-bold leading-snug font-sans">
+                    </div>
+                </div>
+
+                <!-- Gift Box 2 -->
+                <div class="gift-box group bg-white p-6 rounded-2xl shadow-md border-2 border-pink-100 hover:border-hotPink transition-all cursor-pointer relative overflow-hidden text-center" onclick="revealWish(this, 'Thank you for being the most supportive, understanding, and fun friend ever! 💖')">
+                    <div class="gift-content transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">🎀</div>
+                        <h4 class="font-bold text-hotPink text-xs uppercase tracking-wider">Gift #2</h4>
+                        <p class="text-xs text-gray-400 mt-1">Tap to open</p>
+                    </div>
+                    <div class="wish-revealed hidden absolute inset-0 bg-gradient-to-br from-daisyYellow to-amber-500 text-charcoal p-6 flex items-center justify-center text-sm font-bold leading-snug font-sans">
+                    </div>
+                </div>
+
+                <!-- Gift Box 3 -->
+                <div class="gift-box group bg-white p-6 rounded-2xl shadow-md border-2 border-pink-100 hover:border-hotPink transition-all cursor-pointer relative overflow-hidden text-center" onclick="revealWish(this, 'May your day be packed with your favorite treats, lots of laughs, and endless cake! 🎂🎉')">
+                    <div class="gift-content transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">⭐</div>
+                        <h4 class="font-bold text-hotPink text-xs uppercase tracking-wider">Gift #3</h4>
+                        <p class="text-xs text-gray-400 mt-1">Tap to open</p>
+                    </div>
+                    <div class="wish-revealed hidden absolute inset-0 bg-gradient-to-br from-accentTeal to-cyan-600 text-white p-6 flex items-center justify-center text-sm font-bold leading-snug font-sans">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Wish Capsule Modal -->
+    <div id="wishModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center space-y-4 border-4 border-hotPink shadow-2xl transform animate-popIn relative overflow-hidden">
+            <div class="w-16 h-16 mx-auto bg-hotPink text-white rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                <span class="text-3xl">🌟</span>
+            </div>
+            <h4 class="text-2xl font-sans font-extrabold text-charcoal uppercase tracking-wider">Make a Wish</h4>
+            <p class="text-sm text-gray-600 leading-relaxed font-sans">
+                "May all your wildest dreams take flight, every goal you chase come into reach, and this year ahead be your happiest chapter yet!"
+            </p>
+            <button onclick="closeModal()" class="w-full bg-hotPink hover:bg-hotPinkHover text-white py-3 rounded-full text-xs font-extrabold uppercase tracking-widest shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer">
+                Send Wish To The Stars ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-20 text-center py-6 text-xs text-gray-400 border-t border-gray-200 mt-12 tracking-widest uppercase font-bold">
+        DESIGNED BY EMRAN PRODUCTION
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- 1. Background Particle Canvas Animation ---
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random();
+                this.color = ['#E60067', '#FFCC00', '#00BCD4', '#111111'][Math.floor(Math.random() * 4)];
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+
+                this.opacity += (Math.random() - 0.5) * 0.02;
+                if (this.opacity < 0.15) this.opacity = 0.15;
+                if (this.opacity > 0.85) this.opacity = 0.85;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.floor((canvas.width * canvas.height) / 16000);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        // --- 2. Interactive Clickable Balloons ---
+        function createBalloons() {
+            const container = document.getElementById('balloonContainer');
+            const colors = [
+                'rgba(230, 0, 103, 0.7)', 
+                'rgba(255, 204, 0, 0.75)', 
+                'rgba(0, 188, 212, 0.65)', 
+                'rgba(255, 255, 255, 0.9)'
+            ];
+
+            for (let i = 0; i < 9; i++) {
+                const balloon = document.createElement('div');
+                const size = Math.random() * 35 + 50; 
+                const left = Math.random() * 90;
+                const duration = Math.random() * 8 + 12;
+                const delay = Math.random() * 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+
+                balloon.className = 'absolute rounded-full pointer-events-auto cursor-pointer animate-float transition-transform hover:scale-110 active:scale-90 z-10 border border-white/60 shadow-md';
+                balloon.style.width = `${size}px`;
+                balloon.style.height = `${size * 1.2}px`;
+                balloon.style.left = `${left}%`;
+                balloon.style.bottom = `-120px`;
+                balloon.style.backgroundColor = color;
+                balloon.style.animationDuration = `${duration}s`;
+                balloon.style.animationDelay = `${delay}s`;
+                balloon.style.boxShadow = 'inset -5px -5px 10px rgba(0,0,0,0.08)';
+
+                const tail = document.createElement('div');
+                tail.className = 'w-0.5 h-12 bg-gray-400/50 mx-auto pointer-events-none';
+                tail.style.marginTop = `${size * 1.2}px`;
+                balloon.appendChild(tail);
+
+                balloon.onclick = function(e) {
+                    e.stopPropagation();
+                    const rect = balloon.getBoundingClientRect();
+                    const originX = (rect.left + rect.width / 2) / window.innerWidth;
+                    const originY = (rect.top + rect.height / 2) / window.innerHeight;
+
+                    if (typeof confetti === 'function') {
+                        confetti({
+                            particleCount: 25,
+                            spread: 60,
+                            origin: { x: originX, y: originY },
+                            colors: ['#E60067', '#FFCC00', '#00BCD4']
+                        });
+                    }
+
+                    balloon.classList.add('balloon-pop');
+                    setTimeout(() => balloon.remove(), 280);
+                };
+
+                container.appendChild(balloon);
+            }
+        }
+        createBalloons();
+
+        // --- 3. Global Event Handlers ---
+
+        window.fireConfetti = function() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 90,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#E60067', '#FFCC00', '#00BCD4', '#FFFFFF']
+                });
+
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 60,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 },
+                        colors: ['#E60067', '#FFCC00', '#00BCD4']
+                    });
+                }, 200);
+
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 60,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 },
+                        colors: ['#E60067', '#FFCC00', '#00BCD4']
+                    });
+                }, 350);
+            }
+        };
+
+        let litCandlesCount = 5;
+
+        window.extinguishCandle = function(element) {
+            const flameContainer = element.querySelector('.flame-container');
+            if (flameContainer && flameContainer.querySelector('.flame')) {
+                flameContainer.innerHTML = '<div class="smoke w-2 h-4 bg-gray-400 rounded-full mx-auto"></div>';
+                litCandlesCount--;
+
+                if (litCandlesCount === 0) {
+                    triggerCelebration();
+                }
+            }
+        };
+
+        window.blowAllCandles = function() {
+            const candles = document.querySelectorAll('.candle');
+            candles.forEach(candle => window.extinguishCandle(candle));
+        };
+
+        window.rekindleCandles = function() {
+            const candles = document.querySelectorAll('.candle');
+            litCandlesCount = candles.length;
+            candles.forEach(candle => {
+                const flameContainer = candle.querySelector('.flame-container');
+                flameContainer.innerHTML = '<div class="flame w-3.5 h-5 animate-flicker"></div>';
+            });
+            document.getElementById('cakeInstruction').innerText = "Click each candle to blow it out or tap \"Blow Out Candles\"";
+        };
+
+        function triggerCelebration() {
+            document.getElementById('cakeInstruction').innerText = "🎉 All Wishes Sent to the Stars! Happy Birthday Hayat! 🎉";
+            window.fireConfetti();
+            setTimeout(() => {
+                const modal = document.getElementById('wishModal');
+                if (modal) modal.classList.remove('hidden');
+            }, 500);
+        }
+
+        window.closeModal = function() {
+            const modal = document.getElementById('wishModal');
+            if (modal) modal.classList.add('hidden');
+            window.fireConfetti();
+        };
+
+        window.toggleCard = function() {
+            const cardInner = document.getElementById('cardInner');
+            if (cardInner) {
+                cardInner.classList.toggle('rotate-y-180');
+            }
+        };
+
+        window.revealWish = function(element, wishText) {
+            const content = element.querySelector('.gift-content');
+            const revealed = element.querySelector('.wish-revealed');
+
+            if (revealed && content) {
+                if (revealed.classList.contains('hidden')) {
+                    revealed.innerText = wishText;
+                    revealed.classList.remove('hidden');
+                    content.classList.add('opacity-0');
+                    window.fireConfetti();
+                } else {
+                    revealed.classList.add('hidden');
+                    content.classList.remove('opacity-0');
+                }
+            }
+        };
+
+        window.onload = function() {
+            setTimeout(() => {
+                window.fireConfetti();
+            }, 600);
+        };
+    </script>
+</body>
+</html>
